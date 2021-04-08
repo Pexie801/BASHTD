@@ -8,12 +8,11 @@
 
 #size of player area
 PLAYAREA_W=10
-PLAYAREA_H=20
-#PLAYAREA_X=30
-#PLAYAREA_Y=30
+PLAYAREA_H=18
 PLAYAREA_PADDING_L=10
 PLAYAREA_PADDING_R=18
 PLAYAREA_LINE=$((PLAYAREA_W+PLAYAREA_PADDING_L+PLAYAREA_PADDING_R))
+
 # color codes
 RED=1
 GREEN=2
@@ -32,32 +31,55 @@ PLAYER_Y=0
 #exit game loop
 exit=0
 
-#Controls pieces movien
-ticker() {
-  echo 'bla'
-}
-
 #Player inputes
 player_input () {
   draw_playfield
   read -rsn1 pmove
   case $pmove in
-      w) PLAYER_Y=$(( PLAYER_Y - 1)) ;;
-      a) PLAYER_X=$(( PLAYER_X - 2)) ;;
-      s) PLAYER_Y=$(( PLAYER_Y + 1)) ;;
-      d) PLAYER_X=$(( PLAYER_X + 2)) ;;
+      w) if [[ PLAYER_Y -eq 0 ]] ; then
+            PLAYER_Y
+          else
+            PLAYER_Y=$(( PLAYER_Y - 1))
+          fi ;;
+
+      a) if [[ PLAYER_X -eq 0 ]] ; then
+            PLAYER_X
+          else
+            PLAYER_X=$(( PLAYER_X - 2))
+          fi ;;
+  
+      s)  if [[ PLAYER_Y -eq $(( PLAYAREA_H - 1)) ]] ; then
+            PLAYER_Y
+          else
+            PLAYER_Y=$(( PLAYER_Y + 1))
+          fi ;;
+
+      d) #PLAYER_X=$(( PLAYER_X + 2)) 
+          if [[ PLAYER_X -eq $(( PLAYAREA_W - 2 )) ]] ; then
+            PLAYER_X
+          else
+            PLAYER_X=$(( PLAYER_X + 2))
+          fi ;;
       e) echo "place" ;;
       t) echo $PLAYER_X ',' $PLAYER_Y;; #trouble shoot show x and y
       q) end=1 ;; #ends game
     esac
 }
 
-
+#player_move () {
+ # if [[ PLAYER_Y -eq 0 ]] ; then
+ # PLAYER_Y=$PLAYAREA_Y
+ # else
+ #PLAYER_Y=$(( PLAYER_Y - 1 ))
+ # fi
+#}
 #COLISION
 colision_player () {
     #rows
     echo "Line Width+Padding:"$PLAYAREA_LINE
     echo "(X:"$PLAYER_X "Y:"$PLAYER_Y")" #shows player's X,Y in Grid
+
+
     #columns
 }
 #colision_enemy () {}
@@ -89,7 +111,7 @@ draw_title () {
 }
 
 draw_playfield () {
-  local i j x y line
+local i j x y line
 clear                   #Clears screen
 #DRAW TITLE
 draw_title           #Draws title
