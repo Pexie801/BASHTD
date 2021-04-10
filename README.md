@@ -1,6 +1,5 @@
 # BASHTD
 A bash Tower Defense game!
-=============================
 Controls:
   Movie: W,A,S,D 
   Quit: Q
