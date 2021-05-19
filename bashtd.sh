@@ -91,6 +91,17 @@ draw_title () {
     line+="=" 
     }
     echo $line
+    line=()
+
+    ##Test 4th line
+    for ((j = 0; j < $PLAYAREA_LINE; j += 1)) {
+      if [[ j -eq 0 ]]; then
+        line+="|"
+      else 
+        line+="="
+      fi 
+    }
+    echo $line
 }
 
 draw_playfield () {
@@ -117,12 +128,20 @@ local i j x y line tcount
   echo "Line Width+Padding:"$PLAYAREA_LINE
   echo "(X:"$PLAYER_X "Y:"$PLAYER_Y")"                        #shows player's X,Y in Grid 
 echo $TEST_V
+echo "pid " $$
+echo $$
 }
 
-g_count () {
+# Makes things move
+ticker () {
   sleep .5
   TEST_V=$((TEST_V + 1))
 }
+
+# Processes keyboard input
+#reader () {
+
+#}
 
 ######################################################################################
 ################# Bits that run the game go here!!! ##################################
@@ -130,5 +149,6 @@ while [[ $end -eq 0 ]]; do
   #player_input                                                # Gets player input to move
   enemy_move
   draw_playfield                                              # Draws Play Field
-  g_count
+  ticker
+  #quit_game
 done
