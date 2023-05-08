@@ -1,13 +1,13 @@
 #!/bin/bash
 #BASHTD
-#Author Pexie / Mavrik
-#September 2020
-#DC801 & 801Labs
+#Author Pexie
+#May 2023
+#DC801
 
 #VARABILES
   #size of player area
   PLAYAREA_W=10
-  PLAYAREA_H=18
+  PLAYAREA_H=9
   PLAYAREA_PADDING_L=10
   PLAYAREA_PADDING_R=18
   PLAYAREA_LINE=$((PLAYAREA_W+PLAYAREA_PADDING_L+PLAYAREA_PADDING_R))
@@ -58,14 +58,6 @@ player_input () {
           ;;
     esac
 }
-enemy_move () {
-  if [[ $ENEMY_Y -eq $PLAYAREA_H ]] ; then
-    ENEMY_Y=$((0))
-    ENEMY_X=$(( ENEMY_X - 2 ))
-  else
-    ENEMY_Y=$(( ENEMY_Y + 1 ))
-  fi
-}
 
 #PLAY AREA CREATION
 draw_title () {
@@ -83,7 +75,7 @@ draw_title () {
     for ((j = 0; j < $TITLE_X; j += 1)) { 
     line+="=" 
     }
-    echo $line"|BASHTD|"$line
+    echo $line"|BOXIN|"$line
     line=()
 
     ## Third Line
@@ -125,11 +117,7 @@ local i j x y line tcount
       }
     echo $line
   }
-  echo "Line Width+Padding:"$PLAYAREA_LINE
   echo "(X:"$PLAYER_X "Y:"$PLAYER_Y")"                        #shows player's X,Y in Grid 
-echo $TEST_V
-echo "pid " $$
-echo $$
 }
 
 # Makes things move
@@ -138,17 +126,11 @@ ticker () {
   TEST_V=$((TEST_V + 1))
 }
 
-# Processes keyboard input
-#reader () {
-
-#}
-
 ######################################################################################
 ################# Bits that run the game go here!!! ##################################
 while [[ $end -eq 0 ]]; do
-  #player_input                                                # Gets player input to move
-  enemy_move
+  player_input                                                # Gets player input to move
   draw_playfield                                              # Draws Play Field
   ticker
-  #quit_game
+  quit_game
 done
