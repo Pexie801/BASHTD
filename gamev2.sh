@@ -75,7 +75,7 @@ draw_title () {
     for ((j = 0; j < $TITLE_X; j += 1)) { 
     line+="=" 
     }
-    echo $line"|BOXIN|"$line
+    echo $line"|BOXXIN|"$line
     line=()
 
     ## Third Line
@@ -88,7 +88,7 @@ draw_title () {
     ##Test 4th line
     for ((j = 0; j < $PLAYAREA_LINE; j += 1)) {
       if [[ j -eq 0 ]]; then
-        line+="|"
+        line+="="
       else 
         line+="="
       fi 
@@ -120,17 +120,10 @@ local i j x y line tcount
   echo "(X:"$PLAYER_X "Y:"$PLAYER_Y")"                        #shows player's X,Y in Grid 
 }
 
-# Makes things move
-ticker () {
-  sleep .5
-  TEST_V=$((TEST_V + 1))
-}
-
 ######################################################################################
 ################# Bits that run the game go here!!! ##################################
 while [[ $end -eq 0 ]]; do
   player_input                                                # Gets player input to move
   draw_playfield                                              # Draws Play Field
-  ticker
-  quit_game
+  #ticker
 done
