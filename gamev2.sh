@@ -14,6 +14,20 @@
 
   TEST_V=0
 
+  #Colors
+  #Notes pay no heed
+  # Sets BG to Black
+  # printf '\e[48;2;0;0;0m bob \n'
+  # 48 = BG 38 = Text, 2 = IDK, 3 num at end are color in RGB
+  
+  RED=1
+  GREEN=2
+  YELLOW=3
+  BLUE=4
+  FUCHSIA=5
+  CYAN=6
+  WHITE=7
+
   #player cord
   PLAYER_X=0
   PLAYER_Y=0
