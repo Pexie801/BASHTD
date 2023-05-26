@@ -9,15 +9,14 @@
   PLAYAREA_W=10
   PLAYAREA_H=9
   PLAYAREA_PADDING_L=10
-  PLAYAREA_PADDING_R=18
+  PLAYAREA_PADDING_R=10
   PLAYAREA_LINE=$((PLAYAREA_W+PLAYAREA_PADDING_L+PLAYAREA_PADDING_R))
-
-  TEST_V=0
 
   #Colors
   #Notes pay no heed
   # Sets BG to Black
   # printf '\e[48;2;0;0;0m bob \n'
+  # printf '\e[48;2;200;200;200m \n'  prints white background
   # 48 = BG 38 = Text, 2 = IDK, 3 num at end are color in RGB
   
   RED=1
@@ -29,7 +28,7 @@
   WHITE=7
 
   #player cord
-  PLAYER_X=0
+  PLAYER_X=$PLAYAREA_PADDING_L
   PLAYER_Y=0
 
   #enemy cord
@@ -79,10 +78,10 @@ draw_title () {
 
     ## First line
     for ((j = 0; j < $PLAYAREA_LINE; j += 1)) { 
-    line+="=" 
+    line+=''
     }
-    echo $line
-    line=()
+    #echo '\e[48;2;200;200;200m '
+    #line=()
 
     ## Secound Line
     TITLE_X=$(((PLAYAREA_LINE-8)/2))
@@ -111,23 +110,25 @@ draw_title () {
 }
 
 draw_playfield () {
-local i j x y line tcount
-  clear                                                         # Clears screen
-  draw_title                                                    # Draws title
+#local i j x y line tcount
+clear                                                         # Clears screen
+draw_title                                                    # Draws title
 
 #DRAW PLAY AREA
   #ROWS
   for ((j = 0; j < $PLAYAREA_H; j += 1)) {
     #COLUMS
     line=()                                                       # Clears line
-      for ((i = 0; i < $PLAYAREA_W; i += 2 )) {
-        if [[ i -eq $ENEMY_X && j -eq $ENEMY_Y ]]; then
-          line+='<>'
-        elif [[ i -eq $PLAYER_X && j -eq $PLAYER_Y ]]; then
+      for (( i = 0; i < $PLAYAREA_LINE; i += 2 )) {    
+        if [[ i -eq $PLAYER_X && j -eq $PLAYER_Y ]]; then
           line+='[]'
+        elif [[ i < $PLAYAREA_PADDING_L ]]; then
+          line+='=='
+        elif [[ i > $PLAYAREA_PADDING_L+$PLAYAREA_W ]]; then
+          line+='aa'
         else
           line+='--'
-        fi
+        fi        
       }
     echo $line
   }
@@ -139,5 +140,4 @@ local i j x y line tcount
 while [[ $end -eq 0 ]]; do
   player_input                                                # Gets player input to move
   draw_playfield                                              # Draws Play Field
-  #ticker
 done
