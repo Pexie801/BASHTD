@@ -124,10 +124,12 @@ draw_title                                                    # Draws title
           line+='[]'
         elif [[ i < $PLAYAREA_PADDING_L ]]; then
           line+='=='
-        elif [[ i > $PLAYAREA_PADDING_L+$PLAYAREA_W ]]; then
-          line+='aa'
+        elif [[ i -ge $PLAYAREA_PADDING_L+$PLAYAREA_W ]]; then #Padding of right of play area
+          line+='=='
+        elif [[ i -le $PLAYAREA_PADDING_L-$PLAYAREA_W ]]; then #Padding of left of play area
+          line+='=='
         else
-          line+='--'
+          line+='..'
         fi        
       }
     echo $line
